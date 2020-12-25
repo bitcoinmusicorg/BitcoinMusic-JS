@@ -1,0 +1,15 @@
+// {
+//   "websocket": "wss://node.soundac.io",
+//   "address_prefix": "MUSE",
+//   "chain_id": "1459ad9469d36835dbfda0d84ea7700fb6a3ee767c86c4f75de22fa0c40f6c61"
+// }
+
+{
+  "websocket": "wss://node.soundac.io",
+  "address_prefix": "MUSE",
+  "chain_id": "1459ad9469d36835dbfda0d84ea7700fb6a3ee767c86c4f75de22fa0c40f6c61"
+}
+
+//1548967a37bb676dfe09b6c4ff6f06c050a814f6872c521cad322541b0225a14
+//TST
+//104.236.20.21

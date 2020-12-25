@@ -1,0 +1,74 @@
+{
+  "name": "museblockchain-js",
+  "version": "0.1.4",
+  "authors": "tadasu85, gchampagne",
+  "description": "Muse.js the JavaScript API for Muse blockchain",
+  "main": "index.js",
+  "scripts": {
+    "build": "npm run build-browser && npm run build-node",
+    "build-browser": "rm -rf dist && NODE_ENV=production webpack --config webpack.config.js && gzip -k -f ./dist/*.js && du -h ./dist/*",
+    "build-node": "mkdir -p ./lib && cp -r ./src/* ./lib/ && babel ./src --out-dir ./lib",
+    "build-windows": "prepare_code.bat"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SounDAC/SounDAC-JS.git"
+  },
+  "keywords": [
+    "muse",
+    "blockchain",
+    "musejs",
+    "DPOS",
+    "graphene2.4",
+    "music",
+    "rightsmanagement"
+  ],
+  "private": false,
+  "dependencies": {
+    "bigi": "^1.4.2",
+    "bluebird": "^3.4.6",
+    "browserify-aes": "1.0.6",
+    "bs58": "^4.0.0",
+    "bytebuffer": "^5.0.1",
+    "create-hash": "^1.1.2",
+    "create-hmac": "^1.1.4",
+    "debug": "^2.2.0",
+    "detect-node": "^2.0.3",
+    "ecurve": "^1.0.5",
+    "lodash": "^4.16.4",
+    "secure-random": "^1.1.1",
+    "tls": "0.0.1",
+    "ws": "^6.0.0"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.16.0",
+    "babel-eslint": "^7.1.1",
+    "babel-loader": "^6.2.5",
+    "babel-polyfill": "^6.16.0",
+    "babel-preset-es2015": "^6.16.0",
+    "babel-preset-es2017": "^6.16.0",
+    "babel-register": "^6.14.0",
+    "bluebird": "^3.4.6",
+    "bufferutil": "4.0.0",
+    "eslint": "^3.5.0",
+    "eslint-plugin-import": "^1.15.0",
+    "eslint-plugin-jsx-a11y": "^2.2.2",
+    "eslint-plugin-react": "^6.2.1",
+    "json-loader": "^0.5.4",
+    "mocha": "^5.2.0",
+    "mocha-make-stub": "^2.3.2",
+    "should": "^11.1.0",
+    "utf-8-validate": "5.0.1",
+    "webpack": "^1.13.2",
+    "webpack-visualizer-plugin": "^0.1.5"
+  },
+  "bugs": {
+    "url": "https://github.com/themuseblockchain/Muse-JS/issues"
+  },
+  "homepage": "https://github.com/themuseblockchain/Muse-JS#readme",
+  "directories": {
+    "test": "test"
+  },
+  "author": "Muse Inc. Dev Team.",
+  "license": "ISC"
+}
