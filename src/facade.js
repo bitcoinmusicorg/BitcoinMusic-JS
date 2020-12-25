@@ -1,3 +1,4 @@
+import "babel-polyfill";
 var api = require('./api');
 var auth = require('./auth');
 var broadcast = require('./broadcast');
@@ -402,26 +403,31 @@ facade.getBalanceObjects = function(sourceKey, callback){
 
 };
 
-facade.getAssets = function(account, callback){
+facade.getAssets = async (account) => {
+  return new Promise((resolve, reject) => {
     api.getUiaBalances(account, function (err, result) {
-        facade.lastError = err;
-        if (!err) {
-            callback('Assets Found', result);
-        } else {
-            callback(`Couldn't fetch assets of account`, err);
-        }
+      facade.lastError = err;
+      if (!err) {
+        resolve(result);
+      } else {
+        reject(`Couldn't fetch assets of account ${JSON.stringify(err)}`);
+      }
     });
+  })
+
 };
 
-facade.getAsset = function (assetId, callback) {
-  api.getAsset(assetId, function (err, result) {
-    facade.lastError = err;
-    if (!err) {
-      callback('Asset Found', result);
-    } else {
-      callback(`Couldn't fetch asset`, err);
-    }
-  });
+facade.getAsset = async (assetId) => {
+  return new Promise((resolve, reject) => {
+    api.getAsset(assetId, function (err, result) {
+      facade.lastError = err;
+      if (!err) {
+        resolve(result);
+      } else {
+        reject(`Couldn't fetch asset`, err);
+      }
+    });
+  })
 };
 
 facade.claimBalance = function(targetAccount, passwordOrWif, sourceKey, balanceId, balanceToClaim, callback) {
