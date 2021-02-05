@@ -472,4 +472,14 @@ export default [
         method: 'get_asset',
         params: ['asset_id'],
     },
+    {
+        api: 'database_api',
+        method: 'get_order_book_for_assets',
+        params: ['base_id', 'quote_id', 'limit'],
+    },
+    {
+        api: 'database_api',
+        method: 'get_asset_holders',
+        params: ['asset_id'],
+    }
 ];
