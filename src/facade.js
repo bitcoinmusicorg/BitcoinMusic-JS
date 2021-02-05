@@ -337,6 +337,7 @@ facade.login = function(userName, passwordOrWif, callback)
   });
 };
 
+// This function might no longer work after blockchain version v6.1
 facade.transferFunds = function(fromUserName, passwordOrWif, toUserName, amountSixDigitsAfterPeriod, memo, callback) {
   broadcast.transfer(prepareWifOrPassword(fromUserName, passwordOrWif, "active"), fromUserName, toUserName, amountSixDigitsAfterPeriod + " 2.28.0", memo ? memo : "", function(err, result) {
     facade.lastError = err;
@@ -345,12 +346,19 @@ facade.transferFunds = function(fromUserName, passwordOrWif, toUserName, amountS
   });
 };
 
-facade.transferFundsByAsset = function (fromUserName, passwordOrWif, toUserName, amountSixDigitsAfterPeriod, assetId, memo, callback) {
-  broadcast.transfer(prepareWifOrPassword(fromUserName, passwordOrWif, "active"), fromUserName, toUserName, `${amountSixDigitsAfterPeriod} ${assetId}`, memo ? memo : "", function (err, result) {
-    facade.lastError = err;
-    callback(err, result);
-    // callback(result ? 1 : -1, result ? "Success" : "Error");
-  });
+facade.transferFundsByAsset = function (fromUserName, passwordOrWif, toUserName, amountInUnits, assetId, memo, callback) {
+  broadcast.transfer(
+      prepareWifOrPassword(fromUserName, passwordOrWif, 'active'),
+      fromUserName,
+      toUserName,
+      { amount: amountInUnits, asset_id: assetId },
+      memo ? memo : '',
+      function (err, result) {
+          facade.lastError = err;
+          callback(err, result);
+          // callback(result ? 1 : -1, result ? "Success" : "Error");
+      }
+  );
 };
 
 facade.transferFundsToVestings = function(fromUserName, passwordOrWif, toUserNameOrNull, amountSixDigitsAfterPeriod, callback) {

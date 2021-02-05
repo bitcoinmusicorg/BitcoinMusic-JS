@@ -8,6 +8,7 @@ const fp = require('./fast_parser');
 const chain_types = require('./ChainTypes')
 const bigi = require('bigi');
 const trap = require("./Trap.js");
+const { MAINNET_ASSETS } = require("../../../assets-config/mainnet");
 
 import { PublicKey, Address, ecc_config } from "../../ecc"
 import { fromImpliedDecimal } from "./number_utils"
@@ -40,20 +41,18 @@ Types.asset = {
         return amount_string + " " + symbol
     },
 	appendByteBuffer(b, object){
-        object = object.trim()
-		if( ! /^[0-9]+\.?[0-9]* [A-Za-z0-9\.]+$/.test(object))
-            throw new Error("Expecting amount like '99.000 SYMBOL', instead got '" + object + "'")
+        if(!("asset_id" in object) || !("amount" in object)) {
+            throw new Error("Missing asset_id/amount, got: ", object );
+        }
+        let symbol = object.asset_id;
 
-        let [ amount, symbol ] = object.split(" ")
-        if(symbol.length > 6)
-            throw new Error("Symbols are not longer than 6 characters " + symbol + "-"+ symbol.length)
-
-        let dot = amount.indexOf(".") // 0.000
-        let precision = dot === -1 ? 0 : amount.length - dot - 1
+        let precision = MAINNET_ASSETS[symbol].precision;
+        let amount = (object.amount / Math.pow(10, precision)).toString();
 		
         //b.writeUint8(precision);
         if (/^[0-9]+\.[0-9]+\.[0-9]+$/.test(symbol)) {
-            let valInt = Math.trunc(v.to_long(amount.replace(".", "")) * Math.pow(10, 6 - precision));
+            let valInt = object.amount;
+            // let valInt = Math.trunc(v.to_long(amount.replace(".", "")) * Math.pow(10, precision));
             b.writeInt64(valInt);
 
             let symbolLastNumber = symbol.substring(symbol.lastIndexOf('.') + 1);
