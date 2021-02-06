@@ -41,30 +41,41 @@ Types.asset = {
         return amount_string + " " + symbol
     },
 	appendByteBuffer(b, object){
-        if(!("asset_id" in object) || !("amount" in object)) {
-            throw new Error("Missing asset_id/amount, got: ", object );
+        let amount, symbol, precision, amountInUnits;
+        if (typeof object === 'string') {
+            symbol = object.split(' ')[1];
+            precision = MAINNET_ASSETS[symbol].precision;
+            amountInUnits = object.split(' ')[0];
+        } else {
+            if (!('asset_id' in object) || !('amount' in object)) {
+                throw new Error('Missing asset_id/amount, got: ', object);
+            }
+            symbol = object.asset_id;
+            precision = MAINNET_ASSETS[symbol].precision;
+            amountInUnits = object.amount;
         }
-        let symbol = object.asset_id;
 
-        let precision = MAINNET_ASSETS[symbol].precision;
-        let amount = (object.amount / Math.pow(10, precision)).toString();
-		
+        amount = (amountInUnits / Math.pow(10, precision)).toString();
+
+
         //b.writeUint8(precision);
         if (/^[0-9]+\.[0-9]+\.[0-9]+$/.test(symbol)) {
-            let valInt = object.amount;
+            let valInt = amountInUnits;
             // let valInt = Math.trunc(v.to_long(amount.replace(".", "")) * Math.pow(10, precision));
             b.writeInt64(valInt);
 
-            let symbolLastNumber = symbol.substring(symbol.lastIndexOf('.') + 1);
+            let symbolLastNumber = symbol.substring(
+                symbol.lastIndexOf('.') + 1
+            );
             let valPacking = Number(symbolLastNumber);
             do {
                 let tmpByte = valPacking & 0x7f; // retrieve least significant 7 bits
                 valPacking >>= 7; // Discard those bytes
-                tmpByte |= ((valPacking > 0) == 1) ? 0x80 : 0; // If remaining bytes are greater than 0, it means there is still content after this byte
+                tmpByte |= valPacking > 0 == 1 ? 0x80 : 0; // If remaining bytes are greater than 0, it means there is still content after this byte
                 b.writeUint8(tmpByte); // Write current byte, with first bit set to 1 if there is content after
-            } while(valPacking > 0);
+            } while (valPacking > 0);
         } else {
-            b.writeInt64(v.to_long(amount.replace(".", "")));
+            b.writeInt64(v.to_long(amount.replace('.', '')));
             b.writeUint8(precision);
             b.append(symbol.toUpperCase(), 'binary');
             for (let i = 0; i < 7 - symbol.length; i++) {
