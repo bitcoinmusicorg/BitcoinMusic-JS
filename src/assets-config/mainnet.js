@@ -191,6 +191,54 @@ const MAINNET_ASSETS = {
             extensions: [],
         },
     },
+    '2.28.12': {
+        "id": "2.28.12",
+        "current_supply": 0,
+        "symbol_string": "DOT",
+        "precision": 10,
+        "issuer": "2.2.27853",
+        "options": {
+            "max_supply": "50000000000",
+            "market_fee_percent": 0,
+            "max_market_fee": "30000000000000",
+            "issuer_permissions": 73,
+            "flags": 0,
+            "description": "polkadot native token",
+            "extensions": []
+        }
+    },
+    '2.28.13': {
+        "id": "2.28.13",
+        "current_supply": 0,
+        "symbol_string": "SEEDBTCM",
+        "precision": 6,
+        "issuer": "2.2.27853",
+        "options": {
+            "max_supply": 5000000,
+            "market_fee_percent": 0,
+            "max_market_fee": "30000000000000",
+            "issuer_permissions": 73,
+            "flags": 0,
+            "description": "BTCM for seed investors",
+            "extensions": []
+        }
+    },
+    '2.28.14': {
+        "id": "2.28.14",
+        "current_supply": 0,
+        "symbol_string": "PRIVBTCM",
+        "precision": 6,
+        "issuer": "2.2.27853",
+        "options": {
+            "max_supply": 5000000,
+            "market_fee_percent": 0,
+            "max_market_fee": "30000000000000",
+            "issuer_permissions": 73,
+            "flags": 0,
+            "description": "BTCM for private investors",
+            "extensions": []
+        } 
+    }
 };
 
 module.exports = {
