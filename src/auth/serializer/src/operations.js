@@ -45,7 +45,7 @@ const {
     time_point_sec,
     optional,
     asset,
-	obj_id_lastpart,
+    obj_id_lastpart,
 } = types
 
 const future_extensions = types.void
@@ -59,18 +59,18 @@ const operation = static_variant();
 module.exports.operation = operation;
 
 // For module.exports
-const Serializer=function(operation_name, serilization_types_object){
+const Serializer = function (operation_name, serilization_types_object) {
     const s = new SerializerImpl(operation_name, serilization_types_object);
     return module.exports[operation_name] = s;
 }
 
 const beneficiaries = new Serializer("beneficiaries", {
-  account: string,
-  weight: uint16
+    account: string,
+    weight: uint16
 });
 
 const comment_payout_beneficiaries = new Serializer(0, {
-  beneficiaries: set(beneficiaries)
+    beneficiaries: set(beneficiaries)
 });
 
 // Custom-types after Generated code
@@ -97,7 +97,7 @@ let asset = new Serializer(
 Replace: authority.prototype.account_authority_map
 With: map((string), (uint16))
 */
-let signed_transaction = new Serializer( 
+let signed_transaction = new Serializer(
     "signed_transaction", {
     ref_block_num: uint16,
     ref_block_prefix: uint32,
@@ -108,15 +108,15 @@ let signed_transaction = new Serializer(
 }
 );
 
-let signed_block = new Serializer( 
+let signed_block = new Serializer(
     "signed_block", {
     previous: bytes(20),
     timestamp: time_point_sec,
     witness: string,
     transaction_merkle_root: bytes(20),
     extensions: set(static_variant([
-        future_extensions,    
-        version,    
+        future_extensions,
+        version,
         hardfork_version_vote
     ])),
     witness_signature: bytes(65),
@@ -124,44 +124,45 @@ let signed_block = new Serializer(
 }
 );
 
-let block_header = new Serializer( 
+let block_header = new Serializer(
     "block_header", {
     previous: bytes(20),
     timestamp: time_point_sec,
     witness: string,
     transaction_merkle_root: bytes(20),
     extensions: set(static_variant([
-        future_extensions,    
-        version,    
+        future_extensions,
+        version,
         hardfork_version_vote
     ]))
 }
 );
 
-let signed_block_header = new Serializer( 
+let signed_block_header = new Serializer(
     "signed_block_header", {
     previous: bytes(20),
     timestamp: time_point_sec,
     witness: string,
     transaction_merkle_root: bytes(20),
     extensions: set(static_variant([
-        future_extensions,    
-        version,    
+        future_extensions,
+        version,
         hardfork_version_vote
     ])),
     witness_signature: bytes(65)
 }
 );
 
-const vote = new Serializer( 
+const vote = new Serializer(
     "vote", {
     voter: string,
     url: string,
-    weight: int16
+    weight: int16,
+    extensions: set(future_extensions)
 }
 );
 
-const content_metadata_album_master = new Serializer( 
+const content_metadata_album_master = new Serializer(
     "content_metadata_album_master", {
     part_of_album: bool,
     album_title: string,
@@ -183,7 +184,7 @@ const content_metadata_album_master = new Serializer(
 }
 );
 
-const content_metadata_track_master_track_artist = new Serializer( 
+const content_metadata_track_master_track_artist = new Serializer(
     "content_metadata_track_master_track_artist", {
     artist: string,
     aliases: optional(array(string)),
@@ -191,7 +192,7 @@ const content_metadata_track_master_track_artist = new Serializer(
 }
 );
 
-const content_metadata_track_master = new Serializer( 
+const content_metadata_track_master = new Serializer(
     "content_metadata_track_master", {
     track_title: string,
     ISRC: string,
@@ -210,7 +211,7 @@ const content_metadata_track_master = new Serializer(
 }
 );
 
-const content_metadata_publisher_publisher = new Serializer( 
+const content_metadata_publisher_publisher = new Serializer(
     "content_metadata_publisher_publisher", {
     publisher: string,
     IPI_CAE: optional(string),
@@ -218,7 +219,7 @@ const content_metadata_publisher_publisher = new Serializer(
 }
 );
 
-const content_metadata_publisher_writer = new Serializer( 
+const content_metadata_publisher_writer = new Serializer(
     "content_metadata_publisher_writer", {
     writer: string,
     IPI_CAE: optional(string),
@@ -228,7 +229,7 @@ const content_metadata_publisher_writer = new Serializer(
 }
 );
 
-const content_metadata_publisher = new Serializer( 
+const content_metadata_publisher = new Serializer(
     "content_metadata_publisher", {
     composition_title: string,
     alternate_composition_title: optional(string),
@@ -240,21 +241,21 @@ const content_metadata_publisher = new Serializer(
 }
 );
 
-const distribution = new Serializer( 
+const distribution = new Serializer(
     "distribution", {
     payee: string,
     bp: uint32
 }
 );
 
-const management_vote = new Serializer( 
+const management_vote = new Serializer(
     "management_vote", {
     voter: string,
     percentage: uint32
 }
 );
 
-const content = new Serializer( 
+const content = new Serializer(
     "content", {
     uploader: string,
     url: string,
@@ -268,11 +269,12 @@ const content = new Serializer(
     management_comp: optional(array(management_vote)),
     management_threshold_comp: optional(uint32),
     playing_reward: uint32,
-    publishers_share: uint32
+    publishers_share: uint32,
+    extensions: set(future_extensions)
 }
 );
 
-const content_update = new Serializer( 
+const content_update = new Serializer(
     "content_update", {
     url: string,
     side: uint32,
@@ -283,99 +285,109 @@ const content_update = new Serializer(
     new_management: array(management_vote),
     new_threshold: uint32,
     new_playing_reward: uint32,
-    new_publishers_share: uint32
+    new_publishers_share: uint32,
+    extensions: set(future_extensions)
 }
 );
 
-const content_approve = new Serializer( 
+const content_approve = new Serializer(
     "content_approve", {
     approver: string,
-    url: string
+    url: string,
+    extensions: set(future_extensions)
 }
 );
 
-const content_remove = new Serializer( 
+const content_remove = new Serializer(
     "content_remove",
-    {url: string}
+    { url: string, extensions: set(future_extensions) }
 );
 
 
-const transfer = new Serializer( 
+const transfer = new Serializer(
     "transfer", {
     from: string,
     to: string,
     amount: asset,
-    memo: string
+    memo: string,
+    extensions: set(future_extensions)
 }
 );
 
-const transfer_to_vesting = new Serializer( 
+const transfer_to_vesting = new Serializer(
     "transfer_to_vesting", {
     from: string,
     to: string,
-    amount: asset
+    amount: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const withdraw_vesting = new Serializer( 
+const withdraw_vesting = new Serializer(
     "withdraw_vesting", {
     account: string,
-    vesting_shares: asset
+    vesting_shares: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const limit_order_create = new Serializer( 
+const limit_order_create = new Serializer(
     "limit_order_create", {
     owner: string,
     orderid: uint32,
     amount_to_sell: asset,
     min_to_receive: asset,
     fill_or_kill: bool,
-    expiration: time_point_sec
+    expiration: time_point_sec,
+    extensions: set(future_extensions)
 }
 );
 
-const price = new Serializer( 
+const price = new Serializer(
     "price", {
     base: asset,
     quote: asset
 }
 );
 
-const limit_order_create2 = new Serializer( 
+const limit_order_create2 = new Serializer(
     "limit_order_create2", {
     owner: string,
     orderid: uint32,
     amount_to_sell: asset,
     exchange_rate: price,
     fill_or_kill: bool,
-    expiration: time_point_sec
+    expiration: time_point_sec,
+    extensions: set(future_extensions)
 }
 );
 
-const limit_order_cancel = new Serializer( 
+const limit_order_cancel = new Serializer(
     "limit_order_cancel", {
     owner: string,
-    orderid: uint32
+    orderid: uint32,
+    extensions: set(future_extensions)
 }
 );
 
-const feed_publish = new Serializer( 
+const feed_publish = new Serializer(
     "feed_publish", {
     publisher: string,
-    exchange_rate: price
+    exchange_rate: price,
+    extensions: set(future_extensions)
 }
 );
 
-const convert = new Serializer( 
+const convert = new Serializer(
     "convert", {
     owner: string,
     requestid: uint32,
-    amount: asset
+    amount: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const authority = new Serializer( 
+const authority = new Serializer(
     "authority", {
     weight_threshold: uint32,
     account_auths: map((string), (uint16)),
@@ -383,7 +395,7 @@ const authority = new Serializer(
 }
 );
 
-const account_create = new Serializer( 
+const account_create = new Serializer(
     "account_create", {
     fee: asset,
     creator: string,
@@ -392,22 +404,24 @@ const account_create = new Serializer(
     active: authority,
     basic: authority,
     memo_key: public_key,
-    json_metadata: string
+    json_metadata: string,
+    extensions: set(future_extensions)
 }
 );
 
-const account_update = new Serializer( 
+const account_update = new Serializer(
     "account_update", {
     account: string,
     owner: optional(authority),
     active: optional(authority),
     basic: optional(authority),
     memo_key: public_key,
-    json_metadata: string
+    json_metadata: string,
+    extensions: set(future_extensions)
 }
 );
 
-const chain_properties = new Serializer( 
+const chain_properties = new Serializer(
     "chain_properties", {
     account_creation_fee: asset,
     streaming_platform_update_fee: asset,
@@ -416,58 +430,64 @@ const chain_properties = new Serializer(
 }
 );
 
-const witness_update = new Serializer( 
+const witness_update = new Serializer(
     "witness_update", {
     owner: string,
     url: string,
     block_signing_key: public_key,
     props: chain_properties,
-    fee: asset
+    fee: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const account_witness_vote = new Serializer( 
+const account_witness_vote = new Serializer(
     "account_witness_vote", {
     account: string,
     witness: string,
-    approve: bool
+    approve: bool,
+    extensions: set(future_extensions)
 }
 );
 
-const account_witness_proxy = new Serializer( 
+const account_witness_proxy = new Serializer(
     "account_witness_proxy", {
     account: string,
-    proxy: string
+    proxy: string,
+    extensions: set(future_extensions)
 }
 );
 
-const streaming_platform_update = new Serializer( 
+const streaming_platform_update = new Serializer(
     "streaming_platform_update", {
     owner: string,
     url: string,
-    fee: asset
+    fee: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const account_streaming_platform_vote = new Serializer( 
+const account_streaming_platform_vote = new Serializer(
     "account_streaming_platform_vote", {
     account: string,
     streaming_platform: string,
-    approve: bool
+    approve: bool,
+    extensions: set(future_extensions)
 }
 );
 
-const streaming_platform_report = new Serializer( 
+const streaming_platform_report = new Serializer(
     "streaming_platform_report", {
     streaming_platform: string,
     consumer: string,
     content: string,
     playlist_creator: string,
-    play_time: uint64
+    play_time: uint64,
+    extensions: set(future_extensions)
 }
 );
 
-const asset_options = new Serializer( 
+const asset_options = new Serializer(
     "asset_options", {
     max_supply: int64,
     market_fee_percent: uint16,
@@ -479,7 +499,7 @@ const asset_options = new Serializer(
 }
 );
 
-const asset_create = new Serializer( 
+const asset_create = new Serializer(
     "asset_create", {
     issuer: string,
     symbol: string,
@@ -489,7 +509,7 @@ const asset_create = new Serializer(
 }
 );
 
-const asset_update = new Serializer( 
+const asset_update = new Serializer(
     "asset_update", {
     issuer: string,
     asset_to_update: protocol_id_type("asset"),
@@ -499,7 +519,7 @@ const asset_update = new Serializer(
 }
 );
 
-const asset_issue = new Serializer( 
+const asset_issue = new Serializer(
     "asset_issue", {
     issuer: string,
     asset_to_issue: asset,
@@ -508,7 +528,7 @@ const asset_issue = new Serializer(
 }
 );
 
-const asset_reserve = new Serializer( 
+const asset_reserve = new Serializer(
     "asset_reserve", {
     issuer: string,
     payer: string,
@@ -517,56 +537,62 @@ const asset_reserve = new Serializer(
 }
 );
 
-const custom = new Serializer( 
+const custom = new Serializer(
     "custom", {
     required_auths: set(string),
     id: uint16,
-    data: bytes()
+    data: bytes(),
+    extensions: set(future_extensions)
 }
 );
 
-const report_over_production = new Serializer( 
+const report_over_production = new Serializer(
     "report_over_production", {
     reporter: string,
     first_block: signed_block_header,
-    second_block: signed_block_header
+    second_block: signed_block_header,
+    extensions: set(future_extensions)
 }
 );
 
-const custom_json = new Serializer( 
+const custom_json = new Serializer(
     "custom_json", {
     required_auths: set(string),
     required_basic_auths: set(string),
     id: string,
-    json: string
+    json: string,
+    extensions: set(future_extensions)
 }
 );
 
-const set_withdraw_vesting_route = new Serializer( 
+const set_withdraw_vesting_route = new Serializer(
     "set_withdraw_vesting_route", {
     from_account: string,
     to_account: string,
     percent: uint16,
-    auto_vest: bool
+    auto_vest: bool,
+    extensions: set(future_extensions)
 }
 );
 
-const challenge_authority = new Serializer( 
+const challenge_authority = new Serializer(
     "challenge_authority", {
     challenger: string,
     challenged: string,
-    require_owner: bool
+    require_owner: bool,
+    extensions: set(future_extensions)
 }
 );
 
-const prove_authority = new Serializer( 
+const prove_authority = new Serializer(
     "prove_authority", {
     challenged: string,
-    require_owner: bool
+    require_owner: bool,
+    extensions: set(future_extensions)
 }
 );
 
-const request_account_recovery = new Serializer( 
+const request_account_recovery = new Serializer(
     "request_account_recovery", {
     recovery_account: string,
     account_to_recover: string,
@@ -575,7 +601,7 @@ const request_account_recovery = new Serializer(
 }
 );
 
-const recover_account = new Serializer( 
+const recover_account = new Serializer(
     "recover_account", {
     account_to_recover: string,
     new_owner_authority: authority,
@@ -584,7 +610,7 @@ const recover_account = new Serializer(
 }
 );
 
-const change_recovery_account = new Serializer( 
+const change_recovery_account = new Serializer(
     "change_recovery_account", {
     account_to_recover: string,
     new_recovery_account: string,
@@ -592,7 +618,7 @@ const change_recovery_account = new Serializer(
 }
 );
 
-const escrow_transfer = new Serializer( 
+const escrow_transfer = new Serializer(
     "escrow_transfer", {
     from: string,
     to: string,
@@ -602,35 +628,38 @@ const escrow_transfer = new Serializer(
     agent: string,
     fee: asset,
     json_meta: string,
-    expiration: time_point_sec
+    expiration: time_point_sec,
+    extensions: set(future_extensions)
 }
 );
 
-const escrow_dispute = new Serializer( 
+const escrow_dispute = new Serializer(
     "escrow_dispute", {
     from: string,
     to: string,
     escrow_id: uint32,
-    who: string
+    who: string,
+    extensions: set(future_extensions)
 }
 );
 
-const escrow_release = new Serializer( 
+const escrow_release = new Serializer(
     "escrow_release", {
     from: string,
     to: string,
     escrow_id: uint32,
     who: string,
-    amount: asset
+    amount: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const op_wrapper = new Serializer( 
+const op_wrapper = new Serializer(
     "op_wrapper",
-    {op: operation}
+    { op: operation }
 );
 
-const proposal_create = new Serializer( 
+const proposal_create = new Serializer(
     "proposal_create", {
     expiration_time: time_point_sec,
     proposed_ops: array(op_wrapper),
@@ -639,7 +668,7 @@ const proposal_create = new Serializer(
 }
 );
 
-const proposal_update = new Serializer( 
+const proposal_update = new Serializer(
     "proposal_update", {
     proposal: protocol_id_type("proposal"),
     active_approvals_to_add: set(string),
@@ -652,7 +681,7 @@ const proposal_update = new Serializer(
 }
 );
 
-const proposal_delete = new Serializer( 
+const proposal_delete = new Serializer(
     "proposal_delete", {
     using_owner_authority: bool,
     proposal: protocol_id_type("proposal"),
@@ -660,16 +689,17 @@ const proposal_delete = new Serializer(
 }
 );
 
-const fill_convert_request = new Serializer( 
+const fill_convert_request = new Serializer(
     "fill_convert_request", {
     owner: string,
     requestid: uint32,
     amount_in: asset,
-    amount_out: asset
+    amount_out: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const playing_reward = new Serializer( 
+const playing_reward = new Serializer(
     "playing_reward", {
     platform: string,
     url: string,
@@ -678,138 +708,147 @@ const playing_reward = new Serializer(
 }
 );
 
-const content_reward = new Serializer( 
+const content_reward = new Serializer(
     "content_reward", {
     payee: string,
     url: string,
     mbd_payout: asset,
-    vesting_payout: asset
+    vesting_payout: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const curate_reward = new Serializer( 
+const curate_reward = new Serializer(
     "curate_reward", {
     curator: string,
     url: string,
     mbd_payout: asset,
-    vesting_payout: asset
+    vesting_payout: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const liquidity_reward = new Serializer( 
+const liquidity_reward = new Serializer(
     "liquidity_reward", {
     owner: string,
-    payout: asset
+    payout: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const interest = new Serializer( 
+const interest = new Serializer(
     "interest", {
     owner: string,
-    interest: asset
+    interest: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const fill_vesting_withdraw = new Serializer( 
+const fill_vesting_withdraw = new Serializer(
     "fill_vesting_withdraw", {
     from_account: string,
     to_account: string,
     withdrawn: asset,
-    deposited: asset
+    deposited: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const fill_order = new Serializer( 
+const fill_order = new Serializer(
     "fill_order", {
     current_owner: string,
     current_orderid: uint32,
     current_pays: asset,
     open_owner: string,
     open_orderid: uint32,
-    open_pays: asset
+    open_pays: asset,
+    extensions: set(future_extensions)
 }
 );
 
-const friendship = new Serializer( 
+const friendship = new Serializer(
     "friendship", {
     who: string,
-    whom: string
+    whom: string,
+    extensions: set(future_extensions)
 }
 );
 
-const unfriend = new Serializer( 
+const unfriend = new Serializer(
     "unfriend", {
     who: string,
-    whom: string
+    whom: string,
+    extensions: set(future_extensions)
 }
 );
 
-const balance_claim = new Serializer( 
+const balance_claim = new Serializer(
     "balance_claim", {
     deposit_to_account: string,
     balance_to_claim: protocol_id_type("balance"),
     balance_owner_key: public_key,
-    total_claimed: asset
+    total_claimed: asset,
+    extensions: set(future_extensions)
 }
 );
 
 // BEWARE: ORDER OF OPERATIONS, REQUIRED FOR CORRECT NUMBER WHEN SERIALIZING TRANSACTIONS
 // THIS IS WRONG, WE ARE NOT SUPPOSED TO EDIT THIS FILE, IT'S GENERATE BY TOOLING IN ./PROGRAMS OF MUSE-SOURCE, BUT IT'S NOT WORKING ACTUALLY
 operation.st_operations = [
-    vote,    
-    content,    
-    content_update,    
-    content_approve,    
-    content_remove,    
-    transfer,    
-    transfer_to_vesting,    
-    withdraw_vesting,    
-    limit_order_create,    
-    limit_order_create2,    
-    limit_order_cancel,    
-    feed_publish,    
-    convert,    
-    account_create,    
-    account_update,    
-    witness_update,    
-    account_witness_vote,    
-    account_witness_proxy,    
-    streaming_platform_update,    
-    account_streaming_platform_vote,    
-    streaming_platform_report,    
-    asset_create,    
-    asset_update,    
-    asset_issue,    
-    asset_reserve,    
-    custom,    
-    report_over_production,    
-    custom_json,    
-    set_withdraw_vesting_route,    
-    challenge_authority,    
-    prove_authority,    
-    request_account_recovery,    
-    recover_account,    
-    change_recovery_account,    
-    escrow_transfer,    
-    escrow_dispute,    
-    escrow_release,    
-    proposal_create,    
-    proposal_update,    
-    proposal_delete,    
-    fill_convert_request,    
-    playing_reward,    
-    content_reward,    
-    curate_reward,    
-    liquidity_reward,    
-    interest,    
-    fill_vesting_withdraw,    
-    fill_order,    
-    friendship,    
-    unfriend,    
+    vote,
+    content,
+    content_update,
+    content_approve,
+    content_remove,
+    transfer,
+    transfer_to_vesting,
+    withdraw_vesting,
+    limit_order_create,
+    limit_order_create2,
+    limit_order_cancel,
+    feed_publish,
+    convert,
+    account_create,
+    account_update,
+    witness_update,
+    account_witness_vote,
+    account_witness_proxy,
+    streaming_platform_update,
+    account_streaming_platform_vote,
+    streaming_platform_report,
+    asset_create,
+    asset_update,
+    asset_issue,
+    asset_reserve,
+    custom,
+    report_over_production,
+    custom_json,
+    set_withdraw_vesting_route,
+    challenge_authority,
+    prove_authority,
+    request_account_recovery,
+    recover_account,
+    change_recovery_account,
+    escrow_transfer,
+    escrow_dispute,
+    escrow_release,
+    proposal_create,
+    proposal_update,
+    proposal_delete,
+    fill_convert_request,
+    playing_reward,
+    content_reward,
+    curate_reward,
+    liquidity_reward,
+    interest,
+    fill_vesting_withdraw,
+    fill_order,
+    friendship,
+    unfriend,
     balance_claim
 ];
 
-let transaction = new Serializer( 
+let transaction = new Serializer(
     "transaction", {
     ref_block_num: uint16,
     ref_block_prefix: uint32,
@@ -827,11 +866,13 @@ let transaction = new Serializer(
 
 const encrypted_memo = new Serializer(
     "encrypted_memo",
-    {from: public_key,
-    to: public_key,
-    nonce: uint64,
-    check: uint32,
-    encrypted: string_binary}
+    {
+        from: public_key,
+        to: public_key,
+        nonce: uint64,
+        check: uint32,
+        encrypted: string_binary
+    }
 );
 /*
 
