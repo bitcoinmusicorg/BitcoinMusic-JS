@@ -426,7 +426,8 @@ const chain_properties = new Serializer(
     account_creation_fee: asset,
     streaming_platform_update_fee: asset,
     maximum_block_size: uint32,
-    mbd_interest_rate: uint16
+    mbd_interest_rate: uint16,
+    extensions: set(future_extensions)
 }
 );
 
