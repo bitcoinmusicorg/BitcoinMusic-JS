@@ -405,7 +405,6 @@ const account_create = new Serializer(
     basic: authority,
     memo_key: public_key,
     json_metadata: string,
-    extensions: set(future_extensions)
 }
 );
 
