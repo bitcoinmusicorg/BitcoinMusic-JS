@@ -391,7 +391,7 @@ const authority = new Serializer(
     "authority", {
     weight_threshold: uint32,
     account_auths: map((string), (uint16)),
-    key_auths: map((public_key), (uint16))
+    key_auths: map((public_key), (uint16)),
 }
 );
 
@@ -405,6 +405,7 @@ const account_create = new Serializer(
     basic: authority,
     memo_key: public_key,
     json_metadata: string,
+    extensions: set(future_extensions)
 }
 );
 
