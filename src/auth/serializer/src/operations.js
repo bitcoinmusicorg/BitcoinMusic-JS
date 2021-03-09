@@ -504,8 +504,9 @@ const asset_create = new Serializer(
     "asset_create", {
     issuer: string,
     symbol: string,
+    description: string,
     precision: uint8,
-    common_options: asset_options,
+    max_supply: uint64,
     extensions: set(future_extensions)
 }
 );

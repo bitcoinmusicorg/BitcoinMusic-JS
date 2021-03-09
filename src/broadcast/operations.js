@@ -109,6 +109,17 @@ export default [
     ]
   },
   {
+    "roles": ["active"],
+    "operation": "asset_create",
+    "params": [
+      "issuer",
+      "symbol",
+      "description",
+      "precision",
+      "max_supply",
+    ]
+  },
+  {
     "roles": ["owner", "active"],
     "operation": "account_update",
     "params": [
@@ -537,8 +548,8 @@ export default [
     "roles": ["active"],
     "operation": "friendship",
     "params": [
-       "who",
-       "whom"
+      "who",
+      "whom"
     ]
   },
   {
