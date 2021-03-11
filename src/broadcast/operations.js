@@ -120,6 +120,15 @@ export default [
     ]
   },
   {
+    "roles": ["active"],
+    "operation": "asset_issue",
+    "params": [
+      "issuer",
+      "asset_to_issue",
+      "issue_to_account",
+    ]
+  },
+  {
     "roles": ["owner", "active"],
     "operation": "account_update",
     "params": [
