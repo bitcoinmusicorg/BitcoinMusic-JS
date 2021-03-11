@@ -490,7 +490,7 @@ const streaming_platform_report = new Serializer(
 
 const asset_options = new Serializer(
     "asset_options", {
-    max_supply: int64,
+    max_supply: uint16,
     market_fee_percent: uint16,
     max_market_fee: int64,
     issuer_permissions: uint16,
@@ -502,11 +502,11 @@ const asset_options = new Serializer(
 
 const asset_create = new Serializer(
     "asset_create", {
+    fee: asset,
     issuer: string,
     symbol: string,
-    description: string,
     precision: uint8,
-    max_supply: uint64,
+    common_options: asset_options,
     extensions: set(future_extensions)
 }
 );
