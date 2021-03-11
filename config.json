@@ -1,5 +1,5 @@
 {
-  "websocket": "ws://88.99.64.210:33028", //"ws://52.15.184.193:8090",
+  "websocket": "ws://88.99.64.210:33028",
   "address_prefix": "BTST",
   "chain_id": "6a6bf03caa870c36acd6df522fadf0f6aa39128c1909f92d2fab2fa73472186f"
 }
