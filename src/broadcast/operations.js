@@ -112,11 +112,20 @@ export default [
     "roles": ["active"],
     "operation": "asset_create",
     "params": [
+      "fee",
       "issuer",
       "symbol",
-      "description",
       "precision",
-      "max_supply",
+      "common_options",
+    ]
+  },
+  {
+    "roles": ["active"],
+    "operation": "asset_issue",
+    "params": [
+      "issuer",
+      "asset_to_issue",
+      "issue_to_account",
     ]
   },
   {

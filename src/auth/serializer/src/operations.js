@@ -502,11 +502,11 @@ const asset_options = new Serializer(
 
 const asset_create = new Serializer(
     "asset_create", {
+    fee: asset,
     issuer: string,
     symbol: string,
-    description: string,
     precision: uint8,
-    max_supply: uint64,
+    common_options: asset_options,
     extensions: set(future_extensions)
 }
 );

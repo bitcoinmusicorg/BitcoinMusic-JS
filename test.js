@@ -5,8 +5,21 @@ var keys = muse.auth.getPrivateKeys('shery11', 'shery11', ['owner', 'active', 'b
 console.log(keys)
 
 
+muse.broadcast.assetCreate('5JHQXzo8kn84XQmVXUHAoBnvvJQDCgtzLPeA8epa8sWDz5ZPZRh', "100.000000 2.28.2", "shery11", "ABC", 0, {
+    "max_supply": 1000,
+    "market_fee_percent": 0,
+    "max_market_fee": 30000000000000,
+    "issuer_permissions": 73,
+    "flags": 68,
+    "description": "blah",
+}, (err, result) => {
+    console.log(err, result);
 
-muse.broadcast.assetCreate('5Jmz91XubbKpzDrb24YAfjrCGPwMBzDeLbitsmbCjTDyaueyLiK', "testnet123", "SHERYTEST", "httpgoogle", 0, 1000, (err, result) => {
+});
+
+
+
+muse.broadcast.assetCreate('5JHQXzo8kn84XQmVXUHAoBnvvJQDCgtzLPeA8epa8sWDz5ZPZRh', "shery11", "ABC", "this is a description", 0, 1000, (err, result) => {
     console.log(err, result);
 
 });

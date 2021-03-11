@@ -21,7 +21,7 @@ const museBroadcast = {};
 museBroadcast.send = function museBroadcast$send(tx, privKeys, callback) {
   const resultP = museBroadcast._prepareTransaction(tx)
     .then((transaction) => {
-      debug(
+      console.log(
         'Signing transaction (transaction, transaction.operations)',
         transaction, transaction.operations
       );
@@ -31,14 +31,14 @@ museBroadcast.send = function museBroadcast$send(tx, privKeys, callback) {
       );
     })
     .spread((transaction, signedTransaction) => {
-      debug(
+      console.log(
         'Broadcasting transaction (transaction, transaction.operations)',
         transaction, transaction.operations
       );
       return museApi.broadcastTransactionSynchronous(
-      //return museApi.broadcastTransactionWithCallbackAsync(
+        //return museApi.broadcastTransactionWithCallbackAsync(
         signedTransaction,
-        () => {}
+        () => { }
       ).then((result) => {
         const data = Object.assign({}, result, signedTransaction);
         data.transaction_id = result.id;
@@ -66,7 +66,7 @@ museBroadcast._prepareTransaction = function museBroadcast$_prepareTransaction(t
         ref_block_prefix: new Buffer(properties.head_block_id, 'hex').readUInt32LE(4),
         expiration: new Date(
           chainDate.getTime() +
-            15 * 1000
+          15 * 1000
         ),
       }, tx);
     });
@@ -85,7 +85,7 @@ operations.forEach((operation) => {
 
   museBroadcast[`${operationName}With`] =
     function museBroadcast$specializedSendWith(wif, options, callback) {
-      debug(`Sending operation "${operationName}" with`, {options, callback});
+      console.log(`Sending operation "${operationName}" with`, { options, callback });
       const keys = {};
       if (operation.roles && operation.roles.length) {
         keys[operation.roles[0]] = wif; // TODO - Automatically pick a role? Send all?
@@ -107,7 +107,7 @@ operations.forEach((operation) => {
 
   museBroadcast[operationName] =
     function museBroadcast$specializedSend(wif, ...args) {
-      debug(`Parsing operation "${operationName}" with`, {args});
+      console.log(`Parsing operation "${operationName}" with`, { args });
       const options = operationParams.reduce((memo, param, i) => {
         memo[param] = args[i]; // eslint-disable-line no-param-reassign
         return memo;
