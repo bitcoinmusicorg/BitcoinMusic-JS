@@ -17,12 +17,24 @@ muse.broadcast.assetCreate('5JHQXzo8kn84XQmVXUHAoBnvvJQDCgtzLPeA8epa8sWDz5ZPZRh'
 
 });
 
-
+muse.broadcast.assetIssue("5HzJQB1XgfjnhbfGoZU5iNZngD8od16avgvwxUwAcBfUDHB5GVm", "shery11", { amount: 100, asset_id: "2.28.21" }, "shery11", function (d) {
+    console.log(d)
+})
 
 muse.broadcast.assetCreate('5JHQXzo8kn84XQmVXUHAoBnvvJQDCgtzLPeA8epa8sWDz5ZPZRh', "shery11", "ABC", "this is a description", 0, 1000, (err, result) => {
     console.log(err, result);
 
 });
+
+
+muse.config.set('websocket', 'ws://88.99.64.210:33028');
+muse.api.getAsset("2.28.8").then(d => { console.log(d) })
+
+
+muse.config.set('websocket', 'ws://88.99.64.210:33028');
+muse.broadcast.assetIssue("5HzJQB1XgfjnhbfGoZU5iNZngD8od16avgvwxUwAcBfUDHB5GVm", "shery11", { amount: 1, asset_id: "2.28.21" }, "shery11", function (d) {
+    console.log(d)
+})
 
 muse.broadcast.accountCreate(
     '5Jmz91XubbKpzDrb24YAfjrCGPwMBzDeLbitsmbCjTDyaueyLiK',
