@@ -1,5 +1,5 @@
 {
-  "websocket": "ws://3.129.34.183:8090",
+  "websocket": "ws://node.asili.africa:8090",
   "address_prefix": "BTCM",
   "chain_id": "1f39814ecde4b3f1f9e99afb20597bc14296d87d21dcc93094d21b688a619da4"
 }
