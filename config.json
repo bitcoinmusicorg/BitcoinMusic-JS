@@ -1,5 +1,5 @@
 {
-  "websocket": "ws://node.asili.africa:8090",
-  "address_prefix": "BTCM",
-  "chain_id": "1f39814ecde4b3f1f9e99afb20597bc14296d87d21dcc93094d21b688a619da4"
+  "websocket": "ws://88.99.64.210:33028",
+  "address_prefix": "BTST",
+  "chain_id": "6a6bf03caa870c36acd6df522fadf0f6aa39128c1909f92d2fab2fa73472186f"
 }
