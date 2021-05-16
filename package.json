@@ -14,6 +14,9 @@
     "type": "git",
     "url": "git+https://github.com/bitcoinmusicorg/BitcoinMusic-JS.git"
   },
+  "publishConfig": {
+    "access": "restricted"
+  },
   "keywords": [
     "muse",
     "blockchain",

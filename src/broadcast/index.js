@@ -21,7 +21,7 @@ const museBroadcast = {};
 museBroadcast.send = function museBroadcast$send(tx, privKeys, callback) {
   const resultP = museBroadcast._prepareTransaction(tx)
     .then((transaction) => {
-      console.log(
+      debug(
         'Signing transaction (transaction, transaction.operations)',
         transaction, transaction.operations
       );
@@ -31,7 +31,7 @@ museBroadcast.send = function museBroadcast$send(tx, privKeys, callback) {
       );
     })
     .spread((transaction, signedTransaction) => {
-      console.log(
+      debug(
         'Broadcasting transaction (transaction, transaction.operations)',
         transaction, transaction.operations
       );
@@ -85,7 +85,7 @@ operations.forEach((operation) => {
 
   museBroadcast[`${operationName}With`] =
     function museBroadcast$specializedSendWith(wif, options, callback) {
-      console.log(`Sending operation "${operationName}" with`, { options, callback });
+      debug(`Sending operation "${operationName}" with`, { options, callback });
       const keys = {};
       if (operation.roles && operation.roles.length) {
         keys[operation.roles[0]] = wif; // TODO - Automatically pick a role? Send all?
@@ -107,7 +107,7 @@ operations.forEach((operation) => {
 
   museBroadcast[operationName] =
     function museBroadcast$specializedSend(wif, ...args) {
-      console.log(`Parsing operation "${operationName}" with`, { args });
+      debug(`Parsing operation "${operationName}" with`, { args });
       const options = operationParams.reduce((memo, param, i) => {
         memo[param] = args[i]; // eslint-disable-line no-param-reassign
         return memo;
